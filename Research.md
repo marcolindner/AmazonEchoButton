@@ -141,6 +141,7 @@ Device Found
 #### RFCOMM experiments
 
 `sudo rfcomm connect /dev/rfcomm0 6C:56:97:DF:C9:AE 4`
+
 `cat /dev/rfcomm0 | hexdump -C`
 
 
