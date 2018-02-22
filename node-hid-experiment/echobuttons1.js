@@ -2,27 +2,52 @@ var btSerial = new (require('bluetooth-serial-port')).BluetoothSerialPort();
 
 var address = '6C-56-97-DF-C9-AE';
 
-btSerial.findSerialPortChannel(address, function(channel) {
-	btSerial.connect(address, channel, function() {
-		console.log('> connected to ' + address);
-		btSerial.on('data', function(buffer) {
-			console.log('> receiving ('+buffer.length+' bytes):', buffer);
+function parseInput(message) {
+  if (message[0] != 0xf0 || message[message.length-1] != 0xf1) {
+    console.log("Incorrect start and end bytes")
+    return
+  }
+  const counter = message[3]
+  const dsn = message.slice(8, 24).toString('ascii')
+  const state = message[29]
 
-			var isPressed = buffer[buffer.length-2] == 0xc0;
-			console.log(' >> button is ' + (isPressed?'pressed':'released'));
-		});
+  return {
+    counter,
+    dsn,
+    state
+  }
+}
 
-	}, function () {
-		console.log('> cannot connect');
-	});
+function connected() {
+}
 
-}, function() {
-	console.log('found nothing');
-});
+function errorConnecting() {
+  console.log('> cannot connect');
+}
+
+function notFound() {
+  console.log('found nothing');
+}
+
+function incoming(buffer) {
+  console.log('> receiving ('+buffer.length+' bytes):', buffer);
+  console.log(parseInput(buffer))
+
+  var isPressed = buffer[buffer.length-2] == 0xc0;
+  console.log(' >> button is ' + (isPressed?'pressed':'released'));
+
+}
+
+btSerial.findSerialPortChannel(address, (channel) => {
+  btSerial.connect(address, channel, () => {
+    console.log('> connected to ' + address);
+    btSerial.on('data', incoming)
+  }, errorConnecting)
+}, notFound)
 
 
-process.on('SIGINT', function() {
-	console.log("> closing bluetooth connection.");
-	btSerial.close();
-	process.exit();
+process.on('SIGINT', () => {
+  console.log("> closing bluetooth connection.");
+  btSerial.close();
+  process.exit();
 });
