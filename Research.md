@@ -169,3 +169,80 @@ Up:
 
 NB: Based on macOS swift experiment, I think there is buffering that makes these of unequal length.  I think messages start with 0xf0 and end with 0xf1
 
+
+## MacOS System Information
+  EchoBtn5N8:
+  Address:	6C-56-97-DF-C9-AE
+  Major Type:	Peripheral
+  Minor Type:	Peripheral
+  Services:	gadget, RFC SERVER, SPP SERVER
+  Paired:	Yes
+  Configured:	Yes
+  Connected:	Yes
+  Firmware Version:	0x0001
+  Vendor ID:	0x1949
+  Product ID:	0x0415
+  Class of Device:	0x05 0x02 0x8050A
+  AFH:	On
+  AFH Map:	7F88FF11040000
+  RSSI:	-41
+  Role:	Master
+  Connection Mode:	Active Mode
+  Interval:	0 ms
+  EDR Supported:	No
+  eSCO Supported:	No
+  SSP Supported:	Yes
+
+
+### HID Report Descriptor
+
+`05010906 a1010507 850119e0 29e71500 25017501 95088102 95017508 81019505 75010508 19012905 91029501 75039101 95067508 150026a4 00050719 0029a481 00c0050c 0901a101 85037510 95021501 268c0219 012a8c02 8160c0`
+
+```
+0x05, 0x01,        // Usage Page (Generic Desktop Ctrls)
+0x09, 0x06,        // Usage (Keyboard)
+0xA1, 0x01,        // Collection (Application)
+0x05, 0x07,        //   Usage Page (Kbrd/Keypad)
+0x85, 0x01,        //   Report ID (1)
+0x19, 0xE0,        //   Usage Minimum (0xE0)
+0x29, 0xE7,        //   Usage Maximum (0xE7)
+0x15, 0x00,        //   Logical Minimum (0)
+0x25, 0x01,        //   Logical Maximum (1)
+0x75, 0x01,        //   Report Size (1)
+0x95, 0x08,        //   Report Count (8)
+0x81, 0x02,        //   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+0x95, 0x01,        //   Report Count (1)
+0x75, 0x08,        //   Report Size (8)
+0x81, 0x01,        //   Input (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
+0x95, 0x05,        //   Report Count (5)
+0x75, 0x01,        //   Report Size (1)
+0x05, 0x08,        //   Usage Page (LEDs)
+0x19, 0x01,        //   Usage Minimum (Num Lock)
+0x29, 0x05,        //   Usage Maximum (Kana)
+0x91, 0x02,        //   Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
+0x95, 0x01,        //   Report Count (1)
+0x75, 0x03,        //   Report Size (3)
+0x91, 0x01,        //   Output (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
+0x95, 0x06,        //   Report Count (6)
+0x75, 0x08,        //   Report Size (8)
+0x15, 0x00,        //   Logical Minimum (0)
+0x26, 0xA4, 0x00,  //   Logical Maximum (164)
+0x05, 0x07,        //   Usage Page (Kbrd/Keypad)
+0x19, 0x00,        //   Usage Minimum (0x00)
+0x29, 0xA4,        //   Usage Maximum (0xA4)
+0x81, 0x00,        //   Input (Data,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
+0xC0,              // End Collection
+0x05, 0x0C,        // Usage Page (Consumer)
+0x09, 0x01,        // Usage (Consumer Control)
+0xA1, 0x01,        // Collection (Application)
+0x85, 0x03,        //   Report ID (3)
+0x75, 0x10,        //   Report Size (16)
+0x95, 0x02,        //   Report Count (2)
+0x15, 0x01,        //   Logical Minimum (1)
+0x26, 0x8C, 0x02,  //   Logical Maximum (652)
+0x19, 0x01,        //   Usage Minimum (Consumer Control)
+0x2A, 0x8C, 0x02,  //   Usage Maximum (AC Send)
+0x81, 0x60,        //   Input (Data,Array,Abs,No Wrap,Linear,No Preferred State,Null State)
+0xC0,              // End Collection
+
+```
