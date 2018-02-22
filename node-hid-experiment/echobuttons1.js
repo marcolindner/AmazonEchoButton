@@ -9,12 +9,21 @@ function parseInput(message) {
   }
   const counter = message[3]
   const dsn = message.slice(8, 24).toString('ascii')
-  const state = message[29]
+  const tag = message[24]
+  const len = message[25]
+  const value = message.slice(26, 26 + len)
+  const remainder = message.slice(26+len)
+  // const state = message[29]
+  const sum = message.slice(5, -2).reduce((sum, b) => { return (sum + b) & 0xff }, 0)
 
   return {
     counter,
     dsn,
-    state
+    tag,
+    len,
+    value,
+    remainder,
+    sum
   }
 }
 
@@ -30,17 +39,13 @@ function notFound() {
 }
 
 function incoming(buffer) {
-  console.log('> receiving ('+buffer.length+' bytes):', buffer);
+  console.log('> receiving (', buffer.length, 'bytes):', buffer)
   console.log(parseInput(buffer))
-
-  var isPressed = buffer[buffer.length-2] == 0xc0;
-  console.log(' >> button is ' + (isPressed?'pressed':'released'));
-
 }
 
 btSerial.findSerialPortChannel(address, (channel) => {
+  console.log('> connecting to', address, 'on', channel)
   btSerial.connect(address, channel, () => {
-    console.log('> connected to ' + address);
     btSerial.on('data', incoming)
   }, errorConnecting)
 }, notFound)
